@@ -1,7 +1,6 @@
 #include <Servo.h>
 #include <Oscillator.h>
 #include <EEPROM.h>
-#include <IRremote.h>                 //IR library
 
 #define N_SERVOS 4
 //-- First step: Configure the pins where the servos are attached
@@ -41,10 +40,6 @@ void moonWalkRight(int steps, int T=1000);
 void swing(int steps, int T=1000);
 void buzzer_rings(void);
 void RGB_LED(void);
-
-#define RECV_PIN 8         //The infrared control is defined as D8
-IRrecv irrecv(RECV_PIN);
-decode_results results;
 
 char state_rgb_led=1;
 int t=495;
@@ -86,33 +81,30 @@ void setup()
     servo[3].SetTrim(TRIM_YL);
   } 
   for(int i=0;i<4;i++) servo[i].SetPosition(90);
-  irrecv.enableIRIn(); //Enable infrared reception
 }
 ///////////////////////////////////////////////////////////////////////////////////
 void loop()
 {
-  if (irrecv.decode(&results)) 
-    { 
-    Serial.println(results.value, HEX); //Serial print data
-    delay(50);
-    irrecv.resume();
-    }
-  switch(results.value)    //Jump to the position of the corresponding value
-    {
-      case 0xff18e7 :  walk(4, t*1.5);        results.value=0; break;      //Up button of remote control
-      case 0xff4ab5 :  backyard(4, t*2);      results.value=0; break;      //down button of remote control
-      case 0xff10ef :  turnLeft(4, t*2);      results.value=0; break;      //left button of remote control
-      case 0xff5aa5 :  turnRight(4, t*2);     results.value=0; break;      //right button of remote control
-      case 0xff38c7 :  swing(4, t*2);         results.value=0; break;      //OK button of remote control 
-      
-      case 0xFFA25D :  moonWalkLeft(4, t*2);  results.value=0;break;       //1 button of remote control
-      case 0xFF629D :  buzzer_rings();        results.value=0;break;       //2 button of remote control
-      case 0xFFE21D :  moonWalkRight(4, t*2); results.value=0;break;       //3 button of remote control
-      case 0xFF22DD :  kickLeft(1000);        results.value=0;break;       //4 button of remote control
-      case 0xFF02FD :  RGB_LED();             results.value=0;break;       //5 button of remote control
-      case 0xFFC23D :  kickRight(1000);       results.value=0;break;       //6 button of remote control
-      default : break;
-    }  
+  char BT_data;    //Defines a variable to receive data read by bluetooth
+  if(Serial.available())     //Determine whether data is received
+  {
+    BT_data = Serial.read();       //Read the received data and assign it to val
+  }
+  switch(BT_data)    //Determine the data and then execute the corresponding function
+  {
+    case 'U':  walk(4, t*1.5);       break;    //advance
+    case 'D':  backyard(4, t*2);     break;    //reverse
+    case 'L':  turnLeft(4, t*2);     break;    //turn left
+    case 'R':  turnRight(4, t*2);    break;    //turn right
+    case 'S':  swing(4, t*2);        break;    //stop
+    case '1':  moonWalkLeft(4, t*2); break;
+    case '2':  kickLeft(1000);       break;
+    case '3':  kickRight(1000);      break;
+    case '4':  moonWalkRight(4, t*2);break;
+    case '6':  buzzer_rings();       break;
+    case '7':  RGB_LED();            break;
+    default:break;
+  }   
 }
 //////////////////////////////////CONTROL FUNCIONES//////////////////////////////////
 void oscillate(int A[N_SERVOS], int O[N_SERVOS], int T, double phase_diff[N_SERVOS]){

@@ -1,18 +1,13 @@
 /*
  * CKK003 kit tutorial
- * This code applies to cokoino bear car.
- * You can download the assembly and use tutorial with this link:
- * http://www.mediafire.com/file/fv890dyaut8iwjm/CKK0003-tutorials.rar/file
- * https://drive.google.com/open?id=1q8YpJEPIZkcXePf2ZDsOWz1vPrQLADnW
+ * 
+ * This tutorial includes usb serial port driver, 
+ * serial port debugging software, android bluetooth APP, 
+ * library files, sample driver code, installation instructions, 
+ * instructions to use, and so on. 
+ * 
  * Company web site:
  * http://cokoino.com/
- *
- *
- *
- *
- *
- *
- *
  *
  *
  */
