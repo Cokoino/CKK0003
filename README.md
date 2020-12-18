@@ -8,5 +8,7 @@ instructions to use, and so on.
 
 ![](https://github.com/Cokoino/CKK0003/raw/master/download.png)
 
-- Company web site:
-http://cokoino.com/
+# Technical support
+- Email: jex-spt@outlook.com
+
+- Company web site: http://cokoino.com/
