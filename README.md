@@ -9,6 +9,6 @@ instructions to use, and so on.
 ![](https://github.com/Cokoino/CKK0003/raw/master/download.png)
 
 # Technical support
-- Email: jex-spt@outlook.com
+- Email: cokoino@outlook.com
 
 - Company web site: http://cokoino.com/
